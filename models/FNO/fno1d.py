@@ -1,7 +1,3 @@
-"""
-@author: Zongyi Li
-This file is the Fourier Neural Operator for 1D problem such as the (time-independent) Burgers equation discussed in Section 5.1 in the [paper](https://arxiv.org/pdf/2010.08895.pdf).
-"""
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
