@@ -276,7 +276,9 @@ if __name__ == "__main__":
     ################################################################
     #  DATA
     ################################################################
+    parser.add_argument('--pretrain_path', type=str, help='Path to pretraining data')
     parser.add_argument('--train_path', type=str, help='Path to training data')
+    parser.add_argument('--valid_path', type=str, help='Path to validation data')
     parser.add_argument('--time_window', type=int, help='Time window for forecasting')
     parser.add_argument('--augmentation_ratio', type=float, help='Flag for adding augmentations to pretraining')
     parser.add_argument('--encoder_embedding_dim', type=int, help='Dimension of the encoder embedding')

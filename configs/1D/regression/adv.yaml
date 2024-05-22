@@ -3,7 +3,7 @@
 #######################################################################################
 batch_size: 256
 val_batch_size: 64
-num_epochs: 5
+num_epochs: 10
 description: Regression_small
 multiprocessing: false
 device: cuda:0
@@ -13,7 +13,7 @@ n_inner: 5
 pretrained_path: none
 freeze: false
 normalize: false
-mode: classification
+mode: regression
 
 #######################################################################################
 # Model
@@ -46,12 +46,13 @@ div_factor: 10
 final_div_factor: 1000
 dropout: 0.0
 emb_dropout: 0.0
-embedding_dim: 4
+embedding_dim: 1
 
 #######################################################################################
 # Data
 #######################################################################################
-pde: combined
+pde: advection
+norm_vars: false
 pde_dim: 1
 num_samples: 2000
 train_path: YOUR_PATH_TO_TRAINING_DATA

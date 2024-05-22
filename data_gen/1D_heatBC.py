@@ -1,7 +1,6 @@
 from fenics import *
 import numpy as np
 from tqdm import tqdm
-import h5py
 import argparse
 
 def process_u(u):
@@ -94,13 +93,6 @@ def main(args):
 
     num_samples = args.num_samples
     
-    h5f = h5py.File(f"{args.equation}_{args.split}_{args.num_samples}.h5", 'a')
-    dataset = h5f.create_group(args.split)
-
-    h5f_u = dataset.create_dataset(f'u', (num_samples, args.nt, args.nx), dtype='f4')
-    coord = dataset.create_dataset(f'x', (args.nx), dtype='f4')
-    tcoord = dataset.create_dataset(f't', (args.nt), dtype='f4')
-    h5f_nu = dataset.create_dataset(f'nu', (num_samples), dtype='f4') 
 
     if args.split == 'train':
         seed = 0
@@ -112,25 +104,27 @@ def main(args):
     np.random.seed(seed)
     nus = np.random.uniform(0.1, .8, num_samples)
 
-    h5f_nu[:] = nus
+    us = np.zeros((num_samples, args.nt, args.nx))
 
     for i in tqdm(range(num_samples)):
         nu = nus[i]
 
         u = solve_heat(nu, mode = args.BC, total_time=args.total_time, total_length=args.length)
         
-        h5f_u[i] = u
+        us[i] = u
 
     times = np.linspace(0, args.total_time, args.nt)
     x = np.linspace(0, args.length, args.nx)
-    tcoord[:] = times
-    coord[:] = x
+
+    data = {'u': us, 'nu': nus, 't': times, 'x': x}
+
+    np.save(f'data/{args.equation}_{args.split}_{args.num_samples}.npy', data)
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Generating PDE data')
-    parser.add_argument('--equation', type=str, default='Advection',
-                        help='Equation for which data should create for: [Advection]')
+    parser.add_argument('--equation', type=str, default='HeatBC',
+                        help='Equation for which data should create for: [HeatBC]')
     parser.add_argument('--nt', type=int, default=250,
                         help='Number of steps to save')
     parser.add_argument('--total_time', type=float, default=2,
@@ -143,6 +137,9 @@ if __name__ == "__main__":
                         help='Number of sine functions')
     parser.add_argument('--length', type=float, default=16,
                         help='Length of the domain')
+    parser.add_argument('--BC', type=str, default='Dirichlet',)
+    parser.add_argument('--nx', type=int, default=100,
+                        help='Number of points in the domain')
 
     args = parser.parse_args()
     main(args)

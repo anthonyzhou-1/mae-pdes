@@ -3,7 +3,7 @@ import torch
 from utils import RandomSin
 from tqdm import tqdm
 
-def simulate_burgers(args, nu, cx, cy, idx, device):
+def simulate_burgers(args, nu, cx, cy, idx, device='cpu'):
     SAVE_STEPS = args.nt
     TOTAL_TIME = args.total_time
     nx = args.nx

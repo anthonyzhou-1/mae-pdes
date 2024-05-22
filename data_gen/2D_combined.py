@@ -6,10 +6,8 @@ from simulate2D import *
 
 def get_coeffs(args):
     def get_heat():
-        #high = 2e-2
-        #low = 2e-3
-        high = 3e-2
-        low = 2e-2
+        high = 2e-2
+        low = 2e-3
 
         nus = uniform.rvs(low, high-low, size=args.num_samples) 
         axs = np.zeros(args.num_samples)
@@ -19,10 +17,8 @@ def get_coeffs(args):
 
         return nus, axs, ays, cxs, cys
     def get_adv():
-        #low = 0.1
-        #high = 2.5
-        low = 2.5
-        high = 3.5
+        low = 0.1
+        high = 2.5
 
         axs = uniform.rvs(low, high-low, size=args.num_samples) # Sample from uniform distribution [.1, 2.5]
         ays = uniform.rvs(low, high-low, size=args.num_samples) # Sample from uniform distribution [.1, 2.5]
@@ -33,18 +29,14 @@ def get_coeffs(args):
         return nus, axs, ays, cxs, cys
 
     def get_burgers():
-        #nu_low = 7.5e-3
-        #nu_high = 1.5e-2
-
-        nu_low = 5.e-3
-        nu_high = 7.5e-3
+        nu_low = 7.5e-3
+        nu_high = 1.5e-2
 
         nus = uniform.rvs(nu_low, nu_high-nu_low, size=args.num_samples) # Sample from uniform distribution [7.5e-5, 1.5e-2]
 
-        #c_high = 1.0
-        #c_low = 0.5
-        c_high = 1.25
-        c_low = 1.0
+        c_high = 1.0
+        c_low = 0.5
+
         cxs = uniform.rvs(c_low, c_high-c_low, size=args.num_samples) 
         cys = uniform.rvs(c_low, c_high-c_low, size=args.num_samples) 
         axs = np.zeros(args.num_samples)
