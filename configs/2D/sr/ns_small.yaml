@@ -1,0 +1,95 @@
+#######################################################################################
+# Training
+#######################################################################################
+batch_size: 8
+val_batch_size: 8
+num_epochs: 10
+n_inner: 1
+description: SR_2D
+multiprocessing: false
+device: cuda:0
+seed: 0
+wandb_mode: online
+pretrained_path: none
+freeze: false
+normalize: false
+verbose: false
+add_vars: false 
+
+#######################################################################################
+# Model
+#######################################################################################
+encoder: none
+pad: False
+pos_mode: none
+encoder_pool: cls
+encoder_dim: 256
+encoder_mlp_dim: 512
+encoder_heads: 32
+encoder_dim_head: 32
+encoder_depth: 8
+encoder_temporal_depth: 4
+decoder_dim: 32
+decoder_depth: 4
+decoder_heads: 16
+decoder_dim_head: 16
+image_size: [32, 32]
+patch_size: [4, 4]
+temporal_patch_size: 4
+masking_ratio: 0.9
+scheduler: onecycle
+min_lr: 0.0001
+max_lr: 0.001
+beta1: 0.9
+beta2: 0.98
+pct_start: 0.2
+div_factor: 10
+final_div_factor: 1000
+dropout: 0.0
+emb_dropout: 0.0
+embedding_dim: 32
+
+#######################################################################################
+# Data
+#######################################################################################
+pde: ns
+pde_dim: 2
+n_vars: 2
+norm_vars: false
+num_samples: 1000
+train_path: YOUR_PATH_TO_TRAINING_DATA
+valid_path: YOUR_PATH_TO_VALID_DATA
+norm_stat_path: checkpoints/stats/Stats_NS_2D_train.pkl
+base_resolution: [100, 32, 32]
+t_range: [0, 2]
+x_range: [-1, 1]
+load_all: true
+time_window: 16
+augmentation_ratio: 0.0
+max_shift: 0.5
+max_velocity: 0.5
+max_scale: 0.5
+max_nodal_shift: 0.25
+encoder_embedding_dim: 0
+embedding_mode: none
+size_low: 32
+scale_factor: 2 
+
+
+#######################################################################################
+# Timestepper
+#######################################################################################
+operator: FNO2D
+fno_modes: 12
+fno_width: 48
+fno_num_layers: 4
+unet_hidden_channels: 16
+timestep_lr: 0.0008
+timestep_lr_min: 0.0001
+unrolling: 1
+nr_gt_steps: 2
+horizon: 96
+
+network: Resnet2D
+resnet_features: 64
+resnet_blocks: 4
