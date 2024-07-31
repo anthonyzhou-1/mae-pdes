@@ -18,11 +18,6 @@ class VICReg(nn.Module):
 
         repr_loss = F.mse_loss(x, y)
 
-        # Need the full tensor to compute mean, std and cov
-        if torch.cuda.device_count() > 1:
-            x = torch.cat(FullGatherLayer.apply(x), dim=0)
-            y = torch.cat(FullGatherLayer.apply(y), dim=0)
-
         x = x - x.mean(dim=0)
         y = y - y.mean(dim=0)
 
