@@ -432,7 +432,7 @@ class TimestepWrapper(nn.Module):
             else:
                 embeddings = self.encoder(data, z)
 
-            if isinstance(self.encoder, ViT):
+            if isinstance(self.model, ViT):
                 pred = self.model(data, embeddings, features=True, unpatchify=True)
             else:
                 pred = self.model(data, embeddings)
