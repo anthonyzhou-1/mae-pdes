@@ -180,6 +180,7 @@ class ViT(nn.Module):
             if embedding is not None:
                 x_out = x_out[:, :-1]
             if unpatchify:
+                print(x_out.shape)
                 x_out = self.unpatchify(x_out)
                 x_out = self.to_latent(x_out)
             return x_out
