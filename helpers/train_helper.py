@@ -49,8 +49,6 @@ def training_loop(model: torch.nn.Module,
         # Forward pass of encoder model to make an embedding at t+1
         z = embedder(data, loader.dataset.x, loader.dataset.t, random_steps)
         pred = model(data, variables, z)
-        print(pred.shape)
-        print(labels.shape)
         loss = criterion(pred, labels.to(device))
 
         # Backpropagation and stepping the optimizer
