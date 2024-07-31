@@ -1,6 +1,6 @@
 # Masked Autoencoders are PDE Learners
 
-This repository is the official implementation of Masked Autoencoders are PDE Learners
+This repository is the official implementation of [Masked Autoencoders are PDE Learners](https://arxiv.org/abs/2403.17728)
 
 ## Requirements
 
