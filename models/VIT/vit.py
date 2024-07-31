@@ -94,7 +94,8 @@ class ViT(nn.Module):
                  dropout = 0., 
                  emb_dropout = 0.,
                  embedding_dim = 0,
-                 pos_mode = "none"):
+                 pos_mode = "none",
+                 latent_dim=0):
         super().__init__()
         image_height, image_width = pair(image_size)
         patch_height, patch_width = pair(patch_size)
@@ -131,7 +132,7 @@ class ViT(nn.Module):
         self.transformer = Transformer(dim, depth, heads, dim_head, mlp_dim, dropout)
         self.num_features = dim
         self.pool = pool
-        self.to_latent = nn.Identity()
+        self.to_latent = nn.Identity() if latent_dim == 0 else nn.Linear(dim, latent_dim)
 
     def __repr__(self):
         return f'vit'
@@ -180,6 +181,7 @@ class ViT(nn.Module):
                 x_out = x_out[:, :-1]
             if unpatchify:
                 x_out = self.unpatchify(x_out)
+                x_out = self.to_latent(x_out)
             return x_out
         
         x = x.mean(dim = 1) if self.pool == 'mean' else x[:, 0]

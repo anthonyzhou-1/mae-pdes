@@ -264,7 +264,8 @@ def get_forecaster(args, device, model, conditional=False):
                     pool = args.encoder_pool,
                     dim_head = args.encoder_dim_head,
                     embedding_dim=args.embedding_dim,
-                    pos_mode=args.pos_mode).to(device)
+                    pos_mode=args.pos_mode,
+                    latent_dim=1).to(device)
 
     elif model == "FNO2D":
         if not conditional:
