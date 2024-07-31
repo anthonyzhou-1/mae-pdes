@@ -158,7 +158,8 @@ class ViT(nn.Module):
         if normalizer is not None:
             img = normalizer.normalize(img)
         
-        img = img.unsqueeze(1) # add channel dimension
+        if len(img.shape) == 3:
+            img = img.unsqueeze(1) # add channel dimension
         x = self.to_patch_embedding(img)
         b, n, _ = x.shape
 
@@ -182,6 +183,7 @@ class ViT(nn.Module):
             if unpatchify:
                 x_out = self.to_latent(x_out)
                 x_out = self.unpatchify(x_out)
+                x_out = x_out.squeeze()
             return x_out
         
         x = x.mean(dim = 1) if self.pool == 'mean' else x[:, 0]
