@@ -1,0 +1,78 @@
+#######################################################################################
+# Training
+#######################################################################################
+batch_size: 256
+val_batch_size: 64
+num_epochs: 20
+description: SSL
+multiprocessing: false
+device: cuda:1
+seed: 0
+wandb_mode: online
+n_inner: 5
+pretrained_path: none
+freeze: false
+normalize: false
+
+#######################################################################################
+# Model
+#######################################################################################
+encoder: VIT
+pad: False
+pos_mode: none
+encoder_pool: cls
+encoder_dim: 256
+encoder_mlp_dim: 512
+encoder_heads: 16
+encoder_dim_head: 32
+encoder_depth: 6
+encoder_temporal_depth: 4
+decoder_dim: 32
+decoder_depth: 2
+decoder_heads: 8
+decoder_dim_head: 16
+image_size: [20, 100]
+patch_size: [5, 5]
+temporal_patch_size: 2
+masking_ratio: 0.75
+scheduler: onecycle
+min_lr: 0.0001
+max_lr: 0.001
+beta1: 0.9
+beta2: 0.98
+pct_start: 0.2
+div_factor: 10
+final_div_factor: 1000
+dropout: 0.0
+emb_dropout: 0.0
+mlp: "256-128-64"
+
+#######################################################################################
+# Data
+#######################################################################################
+pde: kdv_burgers
+pde_dim: 1
+norm_vars: false 
+add_vars: false 
+num_samples: 10000
+pretrain_path: /home/anthonyz/data_gen/pde-context/1D/pretrain/KdV_Burgers_10000.h5
+train_path: /home/anthonyz/data_gen/pde-context/1D/train/KdVBurgers_4096.h5
+valid_path: /home/anthonyz/data_gen/pde-context/1D/valid/KdVBurgers_256.h5
+norm_stat_path: checkpoints/stats/Stats_KdVBurgers_1D_Pretrain.pkl
+base_resolution: [250, 100]
+t_range: [0, 2]
+x_range: [0, 16]
+load_all: true
+time_window: 20
+augmentation_ratio: 0.5
+max_shift: 0.5
+max_velocity: 0.5
+max_scale: 0.5
+max_nodal_shift: 0.25
+horizon: 200
+encoder_embedding_dim: 0
+embedding_mode: none
+sizes: []
+#sizes: [50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
+
+

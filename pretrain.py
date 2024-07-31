@@ -201,7 +201,7 @@ def main(args: argparse):
     normalizer = get_normalizer(args, train_loader)
 
     # Defining Model
-    model, optimizer, scheduler = get_mae(args, args.device)
+    model, optimizer, scheduler = get_ssl(args, args.device)
 
     if isinstance(embedder, Embedder2D) and args.embedding_mode=='spatial':
         optimizer_embedder = torch.optim.AdamW(embedder.parameters(), args.min_lr)

@@ -22,6 +22,7 @@ from models.Resnet.resnet_2d_cond import Resnet_2D_cond
 from models.Resnet.resnet_1d_cond import Resnet_1D_cond
 from models.VIT.mae import MAE
 from models.VIT.mae_pad import MAE_Padded
+from models.Contrastive.vicreg import VICReg
 
 from common.utils import load_pretrained, EncoderWrapper, Embedder, Embedder2D, Normalizer, TimestepWrapper, SRWrapper
 from common.datasets import PDEDataset, PDEDataset2D
@@ -395,6 +396,41 @@ def get_mae(args, device):
                     decoder_heads = args.decoder_heads,
                     decoder_dim_head = args.decoder_dim_head,
                     pos_mode=args.pos_mode).to(device)
+    
+    optimizer = torch.optim.AdamW(model.parameters(), lr=args.min_lr, betas=(args.beta1, args.beta2), fused=False if device == 'cpu' else True)
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, 
+                                                        max_lr=args.max_lr, 
+                                                        steps_per_epoch= args.base_resolution[0] * (args.num_samples // args.batch_size + 1), 
+                                                        epochs=args.num_epochs, 
+                                                        pct_start=args.pct_start, 
+                                                        anneal_strategy='cos', 
+                                                        div_factor = args.div_factor,
+                                                        final_div_factor=args.final_div_factor)
+    print("Initialized OneCycleLR Scheduler")
+
+    if args.multiprocessing:
+        model = DDP(model, device_ids=[device])
+
+    model_parameters = filter(lambda p: p.requires_grad, model.parameters())
+    params = sum([np.prod(p.size()) for p in model_parameters])
+    print(f'Number of model parameters: {params}')
+
+    if args.pretrained_path != "none":
+        checkpoint = torch.load(args.pretrained_path, map_location=device)
+        model.load_state_dict(checkpoint['model_state_dict'])
+        optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=args.base_resolution[0] * (args.num_samples // args.batch_size + 1), eta_min=args.min_lr//100)
+
+        print(f"Loaded pretrained model from {args.pretrained_path} at epoch : {checkpoint['epoch']}")
+        print("Loaded cosine annealing scheduler")
+
+    return model, optimizer, scheduler
+
+def get_ssl(args, device):
+    backbone = get_backbone(args, device, args.encoder)
+
+    model = VICReg(args, backbone).to(device)   
     
     optimizer = torch.optim.AdamW(model.parameters(), lr=args.min_lr, betas=(args.beta1, args.beta2), fused=False if device == 'cpu' else True)
     scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, 
