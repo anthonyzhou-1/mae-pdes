@@ -253,7 +253,7 @@ def get_forecaster(args, device, model, conditional=False):
                                 embedding_dim=args.embedding_dim).to(device)
             print("Initialized Conditional Unet1D")
 
-    elif model == "VIT1D":
+    elif model == "ViT":
         forecaster = ViT(image_size = tuple(args.image_size),
                     patch_size = tuple(args.patch_size),
                     dim = args.encoder_dim,
