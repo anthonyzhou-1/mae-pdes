@@ -147,6 +147,8 @@ def test_unrolled_losses(model: torch.nn.Module,
                 _, labels = data_creator.create_data_labels(u, same_steps) 
 
                 z = embedder(data, loader.dataset.x, loader.dataset.t, same_steps)
+                print(data)
+                print(data.shape)
                 pred = model(data, variables, z)
 
                 loss = criterion(pred, labels.to(device))

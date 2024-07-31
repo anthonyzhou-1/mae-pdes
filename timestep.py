@@ -110,12 +110,13 @@ def main(args: argparse):
     freeze_str = 'freeze' if args.freeze else "_"
     name = f'{args.seed}_{args.description}_{args.pde}_{args.encoder}_{args.model}_{freeze_str}_{pretrained_str}_{timestring}'
 
-
+    '''
     run = wandb.init(project="pde-context-ablations",
                      entity='ayz2',
                     name = name,
                     config=vars(args),
                     mode=args.wandb_mode)
+    '''
 
     device = args.device
 
@@ -169,19 +170,19 @@ def main(args: argparse):
     verbose = args.verbose
 
     for epoch in range(num_epochs):
-        train(args, 
-              epoch, 
-              model, 
-              optimizer, 
-              scheduler,
-              train_loader, 
-              data_creator, 
-              augmentation, 
-              embedder,
-              normalizer,
-              criterion, 
-              device=device,
-              optimizer_embedder=optimizer_embedder)
+        # train(args, 
+        #       epoch, 
+        #       model, 
+        #       optimizer, 
+        #       scheduler,
+        #       train_loader, 
+        #       data_creator, 
+        #       augmentation, 
+        #       embedder,
+        #       normalizer,
+        #       criterion, 
+        #       device=device,
+        #       optimizer_embedder=optimizer_embedder)
         
         print("Evaluation on validation dataset:")
 
