@@ -48,10 +48,9 @@ def train(args: argparse,
                                device,
                                optimizer_embedder=optimizer_embedder,)
         scheduler.step()
-        '''
-        Uncomment if using wandb
+
         wandb.log({"train/loss": losses})
-        '''
+        
 
 def test(args: argparse,
          model: torch.nn.Module,
@@ -197,12 +196,10 @@ def main(args: argparse):
                         verbose=verbose)
 
         print(f"Validation Loss: {val_loss}\n")
-        '''
-         Uncomment if using wandb
+
         wandb.log({
             "valid/loss": val_loss,
         })
-        '''
 
         if(val_loss < min_val_loss):
             # Save model
@@ -217,12 +214,11 @@ def main(args: argparse):
             torch.save(checkpoint, save_path)
             print(f"Saved model at {save_path}\n")
             min_val_loss = val_loss
-    '''
-    Uncomment if using wandb
+
     wandb.log({
         "min_val_loss/loss": min_val_loss,
     })  
-    '''
+
 
 
 if __name__ == "__main__":
