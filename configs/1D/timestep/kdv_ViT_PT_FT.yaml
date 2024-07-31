@@ -1,0 +1,90 @@
+#######################################################################################
+# Training
+#######################################################################################
+batch_size: 64
+val_batch_size: 64
+num_epochs: 10
+description: Timestep_small
+multiprocessing: false
+device: cuda:0
+seed: 0
+wandb_mode: online
+pretrained_path: none
+freeze: false
+normalize: false
+verbose: false
+add_vars: false 
+
+#######################################################################################
+# Model
+#######################################################################################
+encoder: VIT
+pretrained_path: /home/ayz2/pde-context/checkpoints/new/MAE_small_Aug_VIT_256_mask0.75_aug0.5_511024.pth
+pad: False
+pos_mode: none
+encoder_pool: cls
+encoder_dim: 256
+encoder_mlp_dim: 512
+encoder_heads: 16
+encoder_dim_head: 32
+encoder_depth: 6
+encoder_temporal_depth: 4
+decoder_dim: 32
+decoder_depth: 2
+decoder_heads: 8
+decoder_dim_head: 16
+image_size: [20, 100]
+patch_size: [5, 5]
+temporal_patch_size: 2
+scheduler: cosine
+min_lr: 0.0001
+max_lr: 0.001
+beta1: 0.9
+beta2: 0.98
+pct_start: 0.2
+div_factor: 10
+final_div_factor: 1000
+dropout: 0.0
+emb_dropout: 0.0
+embedding_dim: 32
+
+#######################################################################################
+# Data
+#######################################################################################
+pde: kdv_burgers
+pde_dim: 1
+n_vars: 3
+norm_vars: false
+num_samples: 2000
+train_path: /home/ayz2/data_gen/pde-context/1D/train/KdVBurgers_4096.h5
+valid_path: /home/ayz2/data_gen/pde-context/1D/valid/KdVBurgers_256.h5
+norm_stat_path: checkpoints/stats/Stats_KdVBurgers_1D_train.pkl
+base_resolution: [250, 100]
+t_range: [0, 2]
+x_range: [0, 16]
+load_all: true
+time_window: 20
+augmentation_ratio: 0.0
+max_shift: 0.5
+max_velocity: 0.5
+max_scale: 0.5
+max_nodal_shift: 0.25
+encoder_embedding_dim: 0
+embedding_mode: none
+sizes: []
+
+#######################################################################################
+# Timestepper
+#######################################################################################
+model: ViT
+fno_modes: 24
+fno_width: 64
+fno_num_layers: 4
+unet_hidden_channels: 16
+timestep_lr: 0.0008
+timestep_lr_min: 0.0001
+unrolling: 1
+nr_gt_steps: 2
+horizon: 200
+
+
