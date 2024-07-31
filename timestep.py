@@ -110,16 +110,13 @@ def main(args: argparse):
     freeze_str = 'freeze' if args.freeze else "_"
     name = f'{args.seed}_{args.description}_{args.pde}_{args.encoder}_{args.model}_{freeze_str}_{pretrained_str}_{timestring}'
 
-    '''
-    Uncomment if using wandb
-    run = wandb.init(project=project,
+
+    run = wandb.init(project="pde-context-ablations",
                      entity='ayz2',
                     name = name,
                     config=vars(args),
                     mode=args.wandb_mode)
-    '''
 
-    
     device = args.device
 
     # Data loading

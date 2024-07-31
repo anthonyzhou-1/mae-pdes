@@ -11,6 +11,7 @@ import pickle
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 import torch.nn.functional as F
+from models.VIT.vit import ViT
 
 class DataCreator(nn.Module):
     """
@@ -431,9 +432,15 @@ class TimestepWrapper(nn.Module):
             else:
                 embeddings = self.encoder(data, z)
 
-            pred = self.model(data, embeddings)
+            if isinstance(self.encoder, ViT):
+                pred = self.model(data, embeddings, unpatchify=True)
+            else:
+                pred = self.model(data, embeddings)
         else:
-            pred = self.model(data)
+            if isinstance(self.model, ViT):
+                pred = self.model(data, unpatchify=True)
+            else:
+                pred = self.model(data)
         
         return pred
 

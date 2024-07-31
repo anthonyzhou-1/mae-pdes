@@ -253,6 +253,19 @@ def get_forecaster(args, device, model, conditional=False):
                                 embedding_dim=args.embedding_dim).to(device)
             print("Initialized Conditional Unet1D")
 
+    elif model == "VIT1D":
+        forecaster = ViT(image_size = tuple(args.image_size),
+                    patch_size = tuple(args.patch_size),
+                    dim = args.encoder_dim,
+                    depth = args.encoder_depth,
+                    heads = args.encoder_heads,
+                    mlp_dim = args.encoder_mlp_dim,
+                    channels = 1,
+                    pool = args.encoder_pool,
+                    dim_head = args.encoder_dim_head,
+                    embedding_dim=args.embedding_dim,
+                    pos_mode=args.pos_mode).to(device)
+
     elif model == "FNO2D":
         if not conditional:
             forecaster = FNO2d_bundled(time_window=args.time_window,

@@ -161,9 +161,10 @@ def main(args: argparse):
 
 
 
-    run = wandb.init(project="pde-context-ablations",name = name,
-                config=vars(args),
-                mode=args.wandb_mode)
+    run = wandb.init(project="pde-context-ablations",
+                     name = name,
+                    config=vars(args),
+                    mode=args.wandb_mode)
 
 
     # Data Loading

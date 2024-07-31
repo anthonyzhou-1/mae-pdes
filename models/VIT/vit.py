@@ -153,7 +153,7 @@ class ViT(nn.Module):
             pos = torch.cat((pos_cls, pos), dim = 1)
             return tokens + pos
     
-    def forward(self, img, embedding = None, normalizer = None, features=False):
+    def forward(self, img, embedding = None, normalizer = None, features=False, unpatchify=False):
         if normalizer is not None:
             img = normalizer.normalize(img)
         
@@ -176,6 +176,10 @@ class ViT(nn.Module):
 
         if features:
             x_out = x[:, 1:]
+            if embedding is not None:
+                x_out = x_out[:, :-1]
+            if unpatchify:
+                x_out = self.unpatchify(x_out)
             return x_out
         
         x = x.mean(dim = 1) if self.pool == 'mean' else x[:, 0]
