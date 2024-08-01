@@ -19,7 +19,7 @@ add_vars: false
 # Model
 #######################################################################################
 encoder: VIT
-pretrained_path: /home/ayz2/pde-context/checkpoints/new/MAE_small_Aug_VIT_256_mask0.75_aug0.5_511024.pth
+pretrained_path: /home/ayz2/pde-context/checkpoints/new/SSL_VIT_256_mask0.75_aug0.5_7311658.pth
 pad: False
 pos_mode: none
 encoder_pool: cls
