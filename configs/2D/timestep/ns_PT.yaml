@@ -9,7 +9,7 @@ multiprocessing: false
 device: cuda:0
 seed: 0
 wandb_mode: online
-pretrained_path: none
+pretrained_path: checkpoints/MAE_Aug_VIT3D_64_mask0.9_aug0.5_591056.pth
 freeze: false
 normalize: false
 verbose: false
@@ -18,7 +18,7 @@ add_vars: false
 #######################################################################################
 # Model
 #######################################################################################
-encoder: none
+encoder: VIT3D
 pad: False
 pos_mode: none
 encoder_pool: cls
