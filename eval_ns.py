@@ -3,7 +3,7 @@ from common.utils import DataCreator, LpLoss
 import yaml
 import torch 
 
-path = "./configs/2D/timestep/ns.yaml"
+path = "./configs/2D/timestep/ns_PT.yaml"
 with open(path) as stream:
     try:
         config = yaml.safe_load(stream)
@@ -31,7 +31,9 @@ data_creator = DataCreator(time_history=args.time_window,
 model, optimizer, scheduler = get_model(args, device)
 embedder = get_embedder(args)
 
-pretrained_path = "checkpoints/1_Forecast_2D_ns_none_FNO2D_____5101645.pth"
+#pretrained_path = "checkpoints/1_Forecast_2D_ns_none_FNO2D_____5101645.pth"
+pretrained_path = "checkpoints/1_Forecast_2D_ns_VIT3D_FNO2D_freeze_pretrained_51117.pth"
+#pretrained_path = "checkpoints/1_Forecast_2D_ns_VIT3D_FNO2D___pretrained_5102111.pth"
 model.load_state_dict(torch.load(pretrained_path, map_location=device)["model_state_dict"])
 print("Model loaded from: ", pretrained_path)
 
@@ -45,6 +47,7 @@ for u, variables, in loader:
 
     batch_size = u.shape[0]
     losses_tmp = []
+    gt = u.clone()
 
     with torch.no_grad():
         same_steps = [data_creator.time_history * nr_gt_steps] * batch_size
@@ -82,5 +85,8 @@ outputs = torch.stack(outputs)
 print("Output shape: ", outputs.shape)
 
 import pickle 
-with open("checkpoints/outputs.pkl", "wb") as f:
+with open("checkpoints/outputs_frozen.pkl", "wb") as f:
     pickle.dump(outputs, f)
+
+with open("checkpoints/u.pkl", "rb") as f:
+    pickle.dump(gt, f)
