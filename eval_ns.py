@@ -32,7 +32,7 @@ model, optimizer, scheduler = get_model(args, device)
 embedder = get_embedder(args)
 
 pretrained_path = "checkpoints/1_Forecast_2D_ns_none_FNO2D_____5101645.pth"
-model.load_state_dict(torch.load(pretrained_path, map_location=device))
+model.load_state_dict(torch.load(pretrained_path, map_location=device)["model_state_dict"])
 print("Model loaded from: ", pretrained_path)
 
 # Loop over every data sample
