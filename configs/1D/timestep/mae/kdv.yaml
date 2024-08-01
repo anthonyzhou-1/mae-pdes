@@ -78,9 +78,9 @@ sizes: []
 #######################################################################################
 model: FNO1D
 fno_modes: 24
-fno_width: 64
+fno_width: 128
 fno_num_layers: 4
-unet_hidden_channels: 16
+unet_hidden_channels: 32
 timestep_lr: 0.0008
 timestep_lr_min: 0.0001
 unrolling: 1
