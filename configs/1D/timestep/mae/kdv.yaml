@@ -55,7 +55,7 @@ pde: kdv_burgers
 pde_dim: 1
 n_vars: 3
 norm_vars: false
-num_samples: 2000
+num_samples: 10000
 train_path: /home/ayz2/data_gen/pde-context/1D/pretrain/KdVBurgers_10000.h5
 valid_path: /home/ayz2/data_gen/pde-context/1D/valid/KdVBurgers_256.h5
 norm_stat_path: checkpoints/stats/Stats_KdVBurgers_1D_train.pkl
