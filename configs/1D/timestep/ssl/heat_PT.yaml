@@ -10,7 +10,7 @@ device: cuda:0
 seed: 0
 wandb_mode: online
 pretrained_path: none
-freeze: false
+freeze: true
 normalize: false
 verbose: false
 add_vars: false 
@@ -18,8 +18,8 @@ add_vars: false
 #######################################################################################
 # Model
 #######################################################################################
-encoder: none
-pretrained_path: none
+encoder: VIT
+pretrained_path: /home/ayz2/pde-context/checkpoints/new/MAE_small_Aug_VIT_256_mask0.75_aug0.5_511024.pth
 pad: False
 pos_mode: none
 encoder_pool: cls
@@ -76,7 +76,7 @@ sizes: []
 #######################################################################################
 # Timestepper
 #######################################################################################
-model: ViT
+model: FNO1D
 fno_modes: 24
 fno_width: 64
 fno_num_layers: 4
