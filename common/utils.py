@@ -130,7 +130,10 @@ def load_pretrained(args, backbone, device):
     pretrained_dict = torch.load(args.pretrained_path, map_location=f'cuda:{device}' if args.multiprocessing else device)
     if "model_state_dict" in pretrained_dict:
         pretrained_dict = pretrained_dict["model_state_dict"]
-    pretrained_dict = process_dict(pretrained_dict, "encoder")
+    if "SSL" in args.pretrained_path:
+        pretrained_dict = process_dict(pretrained_dict, "backbone")
+    else:
+        pretrained_dict = process_dict(pretrained_dict, "encoder")
 
     backbone_dict = backbone.state_dict()
     # 1. filter out unnecessary keys
