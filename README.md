@@ -12,7 +12,7 @@ conda env create --name envname --file=environment.yml
 
 ## Datasets
 ### Downloading Data
-Full datasets used in the paper are avaiable [here](https://zenodo.org/records/13355846). 
+Full datasets used in the paper are available [here](https://zenodo.org/records/13355846). 
 
 Data is organized into the following structure:
 
